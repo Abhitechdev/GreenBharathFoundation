@@ -14,13 +14,7 @@ export default function Footer() {
     { labelKey: 'footer.volunteer', href: '/contact' },
   ];
 
-  const programLinks = [
-    { labelKey: 'footer.vanMahotsav', href: '/programs' },
-    { labelKey: 'footer.wildlifeGuardians', href: '/programs' },
-    { labelKey: 'footer.greenSchools', href: '/programs' },
-    { labelKey: 'footer.cleanRivers', href: '/programs' },
-    { labelKey: 'footer.urbanForests', href: '/programs' },
-  ];
+
 
   const legalLinks = [
     { labelKey: 'footer.privacyPolicy', href: 'mailto:info@greenbharat.org?subject=Privacy%20Policy' },
@@ -31,7 +25,7 @@ export default function Footer() {
   return (
     <footer className="relative border-t border-ivory/5" id="footer">
       <div className="section-container py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-12">
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
@@ -72,24 +66,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Programs */}
-          <div>
-            <h4 className="text-sm font-semibold text-ivory uppercase tracking-wider mb-4">
-              {t('footer.programs')}
-            </h4>
-            <ul className="flex flex-col gap-2.5">
-              {programLinks.map((link) => (
-                <li key={link.labelKey}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-ivory/40 hover:text-gold transition-colors duration-200 cursor-pointer"
-                  >
-                    {t(link.labelKey)}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+
 
           {/* Newsletter */}
           <div>
