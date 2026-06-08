@@ -50,6 +50,15 @@ export default function Donate() {
     treeEquivalents[donationAmount] ||
     `~${Math.floor(donationAmount / 250)} Trees planted in our reforestation projects`;
 
+  const handleDonate = () => {
+    const subject = encodeURIComponent(`Donation pledge: Rs ${donationAmount.toLocaleString()}`);
+    const body = encodeURIComponent(
+      `Hello Green Bharat Foundation,\n\nI would like to donate Rs ${donationAmount.toLocaleString()}.\n\nImpact selected: ${currentEquivalent}\n\nPlease share the next steps for completing this contribution.`
+    );
+
+    window.location.href = `mailto:donate@greenbharat.org?subject=${subject}&body=${body}`;
+  };
+
   return (
     <section ref={sectionRef} id="donate" className="section relative">
       {/* Background glow */}
@@ -129,9 +138,10 @@ export default function Donate() {
 
             {/* Donate button */}
             <button
+              type="button"
+              onClick={handleDonate}
               className="w-full btn-gold !py-4 !text-lg justify-center cursor-pointer"
               id="donate-submit-btn"
-              suppressHydrationWarning
             >
               <span className="flex items-center gap-2">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

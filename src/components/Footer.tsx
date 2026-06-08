@@ -1,4 +1,26 @@
-'use client';
+import Link from 'next/link';
+
+const quickLinks = [
+  { label: 'About Us', href: '/mission' },
+  { label: 'Our Programs', href: '/programs' },
+  { label: 'Impact Report', href: '/impact' },
+  { label: 'Volunteer', href: '/contact' },
+  { label: 'Careers', href: '/contact' },
+];
+
+const programLinks = [
+  { label: 'Van Mahotsav Drive', href: '/programs' },
+  { label: 'Wildlife Guardians', href: '/programs' },
+  { label: 'Green Schools', href: '/programs' },
+  { label: 'Clean Rivers', href: '/programs' },
+  { label: 'Urban Forests', href: '/programs' },
+];
+
+const legalLinks = [
+  { label: 'Privacy Policy', href: 'mailto:info@greenbharat.org?subject=Privacy%20Policy' },
+  { label: 'Terms of Use', href: 'mailto:info@greenbharat.org?subject=Terms%20of%20Use' },
+  { label: 'Financials', href: 'mailto:info@greenbharat.org?subject=Financial%20Report%20Request' },
+];
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -35,14 +57,14 @@ export default function Footer() {
               Quick Links
             </h4>
             <ul className="flex flex-col gap-2.5">
-              {['About Us', 'Our Programs', 'Impact Report', 'Volunteer', 'Careers'].map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
+              {quickLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
                     className="text-sm text-ivory/40 hover:text-gold transition-colors duration-200 cursor-pointer"
                   >
-                    {link}
-                  </a>
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -54,20 +76,14 @@ export default function Footer() {
               Programs
             </h4>
             <ul className="flex flex-col gap-2.5">
-              {[
-                'Van Mahotsav Drive',
-                'Wildlife Guardians',
-                'Green Schools',
-                'Clean Rivers',
-                'Urban Forests',
-              ].map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
+              {programLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
                     className="text-sm text-ivory/40 hover:text-gold transition-colors duration-200 cursor-pointer"
                   >
-                    {link}
-                  </a>
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -81,25 +97,32 @@ export default function Footer() {
             <p className="text-sm text-ivory/40 mb-4">
               Get monthly updates on our conservation efforts and impact stories.
             </p>
-            <div className="flex gap-3">
+            <form
+              action="mailto:newsletter@greenbharat.org"
+              method="post"
+              encType="text/plain"
+              className="flex gap-3"
+            >
               <input
                 type="email"
+                name="email"
+                required
                 placeholder="Your email"
                 className="flex-1 py-2.5 px-4 rounded-xl bg-ivory/5 border border-ivory/10 text-ivory text-sm placeholder:text-ivory/25 focus:outline-none focus:border-gold/30 transition-all duration-300"
                 id="footer-email-input"
-                suppressHydrationWarning
               />
               <button
+                type="submit"
                 className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-saffron to-saffron-dark text-white text-sm font-semibold hover:shadow-lg hover:shadow-saffron/20 transition-all duration-300 cursor-pointer"
                 id="footer-subscribe-btn"
-                suppressHydrationWarning
+                aria-label="Subscribe to newsletter"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12h14" />
                   <path d="m12 5 7 7-7 7" />
                 </svg>
               </button>
-            </div>
+            </form>
           </div>
         </div>
 
@@ -110,15 +133,15 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-ivory/25">
           <span>© {currentYear} Green Bharat Foundation. All rights reserved.</span>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-ivory/50 transition-colors cursor-pointer">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-ivory/50 transition-colors cursor-pointer">
-              Terms of Use
-            </a>
-            <a href="#" className="hover:text-ivory/50 transition-colors cursor-pointer">
-              Financials
-            </a>
+            {legalLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="hover:text-ivory/50 transition-colors cursor-pointer"
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
         </div>
       </div>

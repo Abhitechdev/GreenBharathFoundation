@@ -1,5 +1,3 @@
-'use client';
-
 import Donate from '@/components/Donate';
 
 export default function DonatePage() {

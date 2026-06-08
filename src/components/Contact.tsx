@@ -2,6 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+const socialLinks = [
+  { label: 'X', href: 'https://x.com/GreenBharatOrg', name: 'X' },
+  { label: 'In', href: 'https://www.linkedin.com/company/green-bharat-foundation', name: 'LinkedIn' },
+  { label: 'Ig', href: 'https://www.instagram.com/greenbharatfoundation', name: 'Instagram' },
+  { label: 'Yt', href: 'https://www.youtube.com/@GreenBharatFoundation', name: 'YouTube' },
+];
+
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
@@ -165,15 +172,18 @@ export default function Contact() {
             <div className="glass-card p-6">
               <h4 className="font-semibold text-ivory mb-4">Follow Our Journey</h4>
               <div className="flex gap-4">
-                {['X', 'In', 'Ig', 'Yt'].map((icon) => (
-                  <button
-                    key={icon}
+                {socialLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
                     className="w-10 h-10 rounded-xl bg-ivory/5 border border-ivory/10 flex items-center justify-center text-ivory/50 hover:text-gold hover:border-gold/30 hover:bg-gold/5 transition-all duration-300 cursor-pointer text-sm font-bold"
-                    id={`social-${icon.toLowerCase()}`}
-                    suppressHydrationWarning
+                    id={`social-${link.label.toLowerCase()}`}
+                    aria-label={`Open Green Bharat Foundation on ${link.name}`}
                   >
-                    {icon}
-                  </button>
+                    {link.label}
+                  </a>
                 ))}
               </div>
             </div>

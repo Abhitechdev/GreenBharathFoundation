@@ -71,23 +71,15 @@ export default function Stories() {
     return () => observer.disconnect();
   }, []);
 
-  // Autoplay sequencer effect
   useEffect(() => {
     if (!isAutoplay) return;
 
-    // Initially flip the active autoplay card
-    setFlippedCards({ [autoplayIdx]: true });
-
     const interval = setInterval(() => {
-      setFlippedCards(() => {
-        const nextIdx = (autoplayIdx + 1) % testimonials.length;
-        setAutoplayIdx(nextIdx);
-        return { [nextIdx]: true };
-      });
+      setAutoplayIdx((currentIdx) => (currentIdx + 1) % testimonials.length);
     }, 4500);
 
     return () => clearInterval(interval);
-  }, [isAutoplay, autoplayIdx]);
+  }, [isAutoplay]);
 
   const handleCardClick = (idx: number) => {
     // Pause autoplay once user manually interacts with cards
@@ -99,11 +91,7 @@ export default function Stories() {
   };
 
   const toggleAutoplay = () => {
-    if (!isAutoplay) {
-      // Resume autoplay from current state or reset
-      setFlippedCards({ [autoplayIdx]: true });
-    }
-    setIsAutoplay(!isAutoplay);
+    setIsAutoplay((current) => !current);
   };
 
   return (
@@ -157,15 +145,27 @@ export default function Stories() {
 
         {/* Stories 3D Flip Card Container */}
         <div className="flex flex-wrap gap-8 justify-center max-w-7xl mx-auto reveal" style={{ transitionDelay: '0.2s' }}>
-          {testimonials.map((t, idx) => (
-            <div
-              key={t.name}
-              onClick={() => handleCardClick(idx)}
-              className={`w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.33%-1.55rem)] perspective-1000 ${
-                flippedCards[idx] ? 'card-flipped' : ''
-              }`}
-              id={`story-card-${idx}`}
-            >
+          {testimonials.map((t, idx) => {
+            const isFlipped = isAutoplay ? autoplayIdx === idx : Boolean(flippedCards[idx]);
+
+            return (
+              <div
+                key={t.name}
+                onClick={() => handleCardClick(idx)}
+                className={`w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.33%-1.55rem)] perspective-1000 ${
+                  isFlipped ? 'card-flipped' : ''
+                }`}
+                id={`story-card-${idx}`}
+                role="button"
+                tabIndex={0}
+                aria-pressed={isFlipped}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    handleCardClick(idx);
+                  }
+                }}
+              >
               <div className="card-flip-inner transform-style-3d relative rounded-3xl">
                 
                 {/* CARD FRONT */}
@@ -255,7 +255,8 @@ export default function Stories() {
 
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

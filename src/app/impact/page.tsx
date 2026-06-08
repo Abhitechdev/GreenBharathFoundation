@@ -1,5 +1,3 @@
-'use client';
-
 import Impact from '@/components/Impact';
 
 export default function ImpactPage() {

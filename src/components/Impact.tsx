@@ -45,7 +45,6 @@ function AnimatedCounter({ end, suffix = '', duration = 2000 }: CounterProps) {
 
 const impactData = [
   {
-    value: 5000000,
     display: 5,
     suffix: 'M+',
     label: 'Trees Planted',
@@ -59,7 +58,6 @@ const impactData = [
     ),
   },
   {
-    value: 12000,
     display: 12,
     suffix: 'K',
     label: 'Hectares Restored',
@@ -72,7 +70,6 @@ const impactData = [
     ),
   },
   {
-    value: 150000,
     display: 150,
     suffix: 'K+',
     label: 'Volunteers',
@@ -87,7 +84,6 @@ const impactData = [
     ),
   },
   {
-    value: 850000,
     display: 850,
     suffix: 'K',
     label: 'Tonnes CO₂ Offset',
@@ -99,7 +95,6 @@ const impactData = [
     ),
   },
   {
-    value: 2500,
     display: 2500,
     suffix: '+',
     label: 'Villages Empowered',
@@ -112,7 +107,6 @@ const impactData = [
     ),
   },
   {
-    value: 300000,
     display: 300,
     suffix: 'K',
     label: 'Students Educated',
