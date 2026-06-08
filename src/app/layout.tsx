@@ -3,6 +3,7 @@ import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import I18nProvider from "@/components/I18nProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -49,9 +50,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <Navbar />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+        <I18nProvider>
+          <Navbar />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </I18nProvider>
       </body>
     </html>
   );

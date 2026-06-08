@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface CounterProps {
   end: number;
@@ -43,12 +44,12 @@ function AnimatedCounter({ end, suffix = '', duration = 2000 }: CounterProps) {
   );
 }
 
-const impactData = [
+const impactConfigs = [
   {
     display: 5,
     suffix: 'M+',
-    label: 'Trees Planted',
-    description: 'Native saplings across 28 states',
+    labelKey: 'impact.treesLabel',
+    descKey: 'impact.treesDesc',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 22V8" />
@@ -60,8 +61,8 @@ const impactData = [
   {
     display: 12,
     suffix: 'K',
-    label: 'Hectares Restored',
-    description: 'Degraded land brought back to life',
+    labelKey: 'impact.hectaresLabel',
+    descKey: 'impact.hectaresDesc',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
@@ -72,8 +73,8 @@ const impactData = [
   {
     display: 150,
     suffix: 'K+',
-    label: 'Volunteers',
-    description: 'Active green warriors nationwide',
+    labelKey: 'impact.volunteersLabel',
+    descKey: 'impact.volunteersDesc',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
@@ -86,8 +87,8 @@ const impactData = [
   {
     display: 850,
     suffix: 'K',
-    label: 'Tonnes CO₂ Offset',
-    description: 'Carbon absorbed by our forests',
+    labelKey: 'impact.co2Label',
+    descKey: 'impact.co2Desc',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
@@ -97,8 +98,8 @@ const impactData = [
   {
     display: 2500,
     suffix: '+',
-    label: 'Villages Empowered',
-    description: 'Sustainable livelihoods created',
+    labelKey: 'impact.villagesLabel',
+    descKey: 'impact.villagesDesc',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -109,8 +110,8 @@ const impactData = [
   {
     display: 300,
     suffix: 'K',
-    label: 'Students Educated',
-    description: 'Young minds inspired for change',
+    labelKey: 'impact.studentsLabel',
+    descKey: 'impact.studentsDesc',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
@@ -122,6 +123,7 @@ const impactData = [
 
 export default function Impact() {
   const sectionRef = useRef<HTMLElement>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -145,22 +147,22 @@ export default function Impact() {
       <div className="section-container relative z-10">
         <div className="text-center mb-20 reveal">
           <span className="inline-block text-sm font-semibold text-saffron tracking-[0.2em] uppercase mb-4">
-            Our Impact
+            {t('impact.sectionLabel')}
           </span>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-ivory mb-6">
-            Numbers That{' '}
-            <span className="text-gradient-gold">Speak</span>
+            {t('impact.heading')}{' '}
+            <span className="text-gradient-gold">{t('impact.headingHighlight')}</span>
           </h2>
           <p className="text-ivory/50 text-lg max-w-2xl mx-auto">
-            Real results from the ground — measured, verified, and growing every day.
+            {t('impact.subtitle')}
           </p>
         </div>
 
         {/* Impact Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {impactData.map((item, idx) => (
+          {impactConfigs.map((item, idx) => (
             <div
-              key={item.label}
+              key={t(item.labelKey)}
               className="reveal glass-card p-8 text-center group cursor-default"
               style={{ transitionDelay: `${idx * 0.1}s` }}
             >
@@ -170,8 +172,8 @@ export default function Impact() {
               <div className="text-4xl sm:text-5xl font-bold text-gradient-gold mb-2">
                 <AnimatedCounter end={item.display} suffix={item.suffix} />
               </div>
-              <div className="text-lg font-semibold text-ivory mb-1">{item.label}</div>
-              <div className="text-sm text-ivory/40">{item.description}</div>
+              <div className="text-lg font-semibold text-ivory mb-1">{t(item.labelKey)}</div>
+              <div className="text-sm text-ivory/40">{t(item.descKey)}</div>
             </div>
           ))}
         </div>
@@ -181,10 +183,10 @@ export default function Impact() {
           <div className="glass rounded-2xl p-8">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
               <div>
-                <h3 className="text-xl font-bold text-ivory">2026 Planting Goal</h3>
-                <p className="text-ivory/40 text-sm">Target: 1 Million Trees This Year</p>
+                <h3 className="text-xl font-bold text-ivory">{t('impact.goalTitle')}</h3>
+                <p className="text-ivory/40 text-sm">{t('impact.goalSubtitle')}</p>
               </div>
-              <span className="text-2xl font-bold text-gradient-saffron mt-2 sm:mt-0">73%</span>
+              <span className="text-2xl font-bold text-gradient-saffron mt-2 sm:mt-0">{t('impact.goalProgress')}</span>
             </div>
             <div className="w-full h-3 bg-deep-2 rounded-full overflow-hidden">
               <div
@@ -193,8 +195,8 @@ export default function Impact() {
               />
             </div>
             <div className="flex justify-between mt-3 text-xs text-ivory/30">
-              <span>730,000 planted</span>
-              <span>1,000,000 goal</span>
+              <span>{t('impact.goalPlanted')}</span>
+              <span>{t('impact.goalTotal')}</span>
             </div>
           </div>
         </div>

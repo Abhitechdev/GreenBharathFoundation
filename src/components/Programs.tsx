@@ -2,36 +2,38 @@
 
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { useTranslation } from 'react-i18next';
 
-const programs = [
+const programConfigs = [
   {
-    title: 'Van Mahotsav Drive',
-    description:
-      'Our flagship annual plantation campaign spanning all 28 states. Communities come together every monsoon to plant millions of native trees.',
+    titleKey: 'programs.program1Title',
+    descKey: 'programs.program1Desc',
     image: '/community-planting.png',
-    tags: ['Reforestation', 'Community'],
-    stats: { target: '2M Trees/Year', reach: '28 States' },
+    tagKeys: ['programs.program1Tag1', 'programs.program1Tag2'],
+    targetKey: 'programs.program1Target',
+    reachKey: 'programs.program1Reach',
   },
   {
-    title: 'Wildlife Guardians',
-    description:
-      'Protecting India\'s endangered species through habitat restoration, anti-poaching patrols, and corridor creation between fragmented forests.',
+    titleKey: 'programs.program2Title',
+    descKey: 'programs.program2Desc',
     image: '/wildlife-tiger.png',
-    tags: ['Conservation', 'Wildlife'],
-    stats: { target: '15 Corridors', reach: '12 Sanctuaries' },
+    tagKeys: ['programs.program2Tag1', 'programs.program2Tag2'],
+    targetKey: 'programs.program2Target',
+    reachKey: 'programs.program2Reach',
   },
   {
-    title: 'Green Schools Initiative',
-    description:
-      'Transforming 10,000 schools into environmental learning hubs with gardens, waste management systems, and nature curricula.',
+    titleKey: 'programs.program3Title',
+    descKey: 'programs.program3Desc',
     image: '/hero-forest.png',
-    tags: ['Education', 'Youth'],
-    stats: { target: '10K Schools', reach: '5M Students' },
+    tagKeys: ['programs.program3Tag1', 'programs.program3Tag2'],
+    targetKey: 'programs.program3Target',
+    reachKey: 'programs.program3Reach',
   },
 ];
 
 export default function Programs() {
   const sectionRef = useRef<HTMLElement>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -55,22 +57,22 @@ export default function Programs() {
       <div className="section-container relative z-10">
         <div className="text-center mb-20 reveal">
           <span className="inline-block text-sm font-semibold text-river-light tracking-[0.2em] uppercase mb-4">
-            Our Programs
+            {t('programs.sectionLabel')}
           </span>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-ivory mb-6">
-            Initiatives That{' '}
-            <span className="text-gradient-forest">Transform</span>
+            {t('programs.heading')}{' '}
+            <span className="text-gradient-forest">{t('programs.headingHighlight')}</span>
           </h2>
           <p className="text-ivory/50 text-lg max-w-2xl mx-auto">
-            From dense forests to urban schools, our programs create lasting impact across diverse landscapes and communities.
+            {t('programs.subtitle')}
           </p>
         </div>
 
         {/* Program Cards */}
         <div className="flex flex-col gap-8">
-          {programs.map((program, idx) => (
+          {programConfigs.map((program, idx) => (
             <div
-              key={program.title}
+              key={t(program.titleKey)}
               className={`reveal glass-card overflow-hidden group cursor-pointer ${
                 idx % 2 === 1 ? 'md:flex-row-reverse' : ''
               }`}
@@ -81,7 +83,7 @@ export default function Programs() {
                 <div className="relative w-full md:w-2/5 h-64 md:h-auto overflow-hidden">
                   <Image
                     src={program.image}
-                    alt={program.title}
+                    alt={t(program.titleKey)}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, 40vw"
@@ -93,39 +95,39 @@ export default function Programs() {
                 <div className="flex-1 p-8 md:p-10 lg:p-12 flex flex-col justify-center">
                   {/* Tags */}
                   <div className="flex gap-2 mb-4">
-                    {program.tags.map((tag) => (
+                    {program.tagKeys.map((tagKey) => (
                       <span
-                        key={tag}
+                        key={tagKey}
                         className="px-3 py-1 text-xs font-medium text-gold bg-gold/10 rounded-full"
                       >
-                        {tag}
+                        {t(tagKey)}
                       </span>
                     ))}
                   </div>
 
                   <h3 className="text-2xl sm:text-3xl font-bold text-ivory mb-4 group-hover:text-gold-light transition-colors duration-300">
-                    {program.title}
+                    {t(program.titleKey)}
                   </h3>
                   <p className="text-ivory/50 leading-relaxed mb-6">
-                    {program.description}
+                    {t(program.descKey)}
                   </p>
 
                   {/* Stats */}
                   <div className="flex gap-8">
                     <div>
-                      <div className="text-lg font-bold text-gradient-saffron">{program.stats.target}</div>
-                      <div className="text-xs text-ivory/30 mt-1">Target</div>
+                      <div className="text-lg font-bold text-gradient-saffron">{t(program.targetKey)}</div>
+                      <div className="text-xs text-ivory/30 mt-1">{t('programs.targetLabel')}</div>
                     </div>
                     <div>
-                      <div className="text-lg font-bold text-gradient-gold">{program.stats.reach}</div>
-                      <div className="text-xs text-ivory/30 mt-1">Reach</div>
+                      <div className="text-lg font-bold text-gradient-gold">{t(program.reachKey)}</div>
+                      <div className="text-xs text-ivory/30 mt-1">{t('programs.reachLabel')}</div>
                     </div>
                   </div>
 
                   {/* CTA */}
                   <div className="mt-6">
                     <span className="inline-flex items-center gap-2 text-sm font-semibold text-gold group-hover:text-saffron transition-colors duration-300">
-                      Learn More
+                      {t('programs.learnMore')}
                       <svg
                         width="16"
                         height="16"

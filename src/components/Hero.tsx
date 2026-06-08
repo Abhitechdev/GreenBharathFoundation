@@ -3,9 +3,11 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,36 +62,36 @@ export default function Hero() {
         <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass mb-8 animate-[fade-up_0.8s_ease-out]">
           <span className="w-2 h-2 rounded-full bg-saffron animate-pulse-glow" />
           <span className="text-sm font-medium text-gold tracking-wide">
-            Empowering India&apos;s Green Future Since 2018
+            {t('hero.badge')}
           </span>
         </div>
 
         {/* Heading */}
         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] mb-6 animate-[fade-up_0.8s_ease-out_0.2s_both]">
-          <span className="block text-ivory">Nurturing</span>
-          <span className="block text-gradient-saffron mt-2">Bharat&apos;s</span>
-          <span className="block text-ivory mt-2">Green Heritage</span>
+          <span className="block text-ivory">{t('hero.headingLine1')}</span>
+          <span className="block text-gradient-saffron mt-2">{t('hero.headingLine2')}</span>
+          <span className="block text-ivory mt-2">{t('hero.headingLine3')}</span>
         </h1>
 
         {/* Subtitle */}
         <p className="text-lg sm:text-xl text-ivory/60 max-w-2xl mx-auto mb-10 leading-relaxed animate-[fade-up_0.8s_ease-out_0.4s_both]">
-          We protect forests, empower communities, and restore ecosystems across India.
-          <span className="text-gold"> Together, we plant the seeds of tomorrow.</span>
+          {t('hero.subtitle')}
+          <span className="text-gold">{t('hero.subtitleHighlight')}</span>
         </p>
 
-        {/* CTA Buttons (increased gap-4 to gap-6 for better spacing) */}
+        {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-6 justify-center animate-[fade-up_0.8s_ease-out_0.6s_both]">
           <Link href="/donate" className="btn-primary text-lg !px-8 !py-4 cursor-pointer" suppressHydrationWarning>
             <span className="flex items-center gap-2">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
               </svg>
-              Plant a Tree
+              {t('hero.ctaPlantTree')}
             </span>
           </Link>
           <Link href="/mission" className="btn-outline text-lg !px-8 !py-4 cursor-pointer" suppressHydrationWarning>
             <span className="flex items-center gap-2">
-              Our Mission
+              {t('hero.ctaMission')}
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14" />
                 <path d="m12 5 7 7-7 7" />
@@ -101,10 +103,10 @@ export default function Hero() {
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-16 animate-[fade-up_0.8s_ease-out_0.8s_both]">
           {[
-            { value: '5M+', label: 'Trees Planted' },
-            { value: '28', label: 'States Active' },
-            { value: '150K+', label: 'Volunteers' },
-            { value: '12K', label: 'Hectares Restored' },
+            { value: t('hero.statTreesValue'), label: t('hero.statTreesLabel') },
+            { value: t('hero.statStatesValue'), label: t('hero.statStatesLabel') },
+            { value: t('hero.statVolunteersValue'), label: t('hero.statVolunteersLabel') },
+            { value: t('hero.statHectaresValue'), label: t('hero.statHectaresLabel') },
           ].map((stat) => (
             <div key={stat.label} className="glass rounded-2xl p-4 sm:p-6 group hover:bg-forest/20 transition-all duration-500 cursor-default">
               <div className="text-2xl sm:text-3xl font-bold text-gradient-gold">{stat.value}</div>
@@ -116,7 +118,7 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 animate-[fade-up_1s_ease-out_1s_both]">
-        <span className="text-xs text-ivory/40 tracking-widest uppercase">Scroll</span>
+        <span className="text-xs text-ivory/40 tracking-widest uppercase">{t('hero.scroll')}</span>
         <div className="w-5 h-8 rounded-full border-2 border-ivory/20 flex items-start justify-center p-1">
           <div className="w-1.5 h-1.5 rounded-full bg-gold animate-bounce" />
         </div>

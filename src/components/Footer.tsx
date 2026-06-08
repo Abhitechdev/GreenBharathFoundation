@@ -1,29 +1,32 @@
+'use client';
+
 import Link from 'next/link';
-
-const quickLinks = [
-  { label: 'About Us', href: '/mission' },
-  { label: 'Our Programs', href: '/programs' },
-  { label: 'Impact Report', href: '/impact' },
-  { label: 'Volunteer', href: '/contact' },
-  { label: 'Careers', href: '/contact' },
-];
-
-const programLinks = [
-  { label: 'Van Mahotsav Drive', href: '/programs' },
-  { label: 'Wildlife Guardians', href: '/programs' },
-  { label: 'Green Schools', href: '/programs' },
-  { label: 'Clean Rivers', href: '/programs' },
-  { label: 'Urban Forests', href: '/programs' },
-];
-
-const legalLinks = [
-  { label: 'Privacy Policy', href: 'mailto:info@greenbharat.org?subject=Privacy%20Policy' },
-  { label: 'Terms of Use', href: 'mailto:info@greenbharat.org?subject=Terms%20of%20Use' },
-  { label: 'Financials', href: 'mailto:info@greenbharat.org?subject=Financial%20Report%20Request' },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { t } = useTranslation();
+
+  const quickLinks = [
+    { labelKey: 'footer.aboutUs', href: '/mission' },
+    { labelKey: 'footer.ourPrograms', href: '/programs' },
+    { labelKey: 'footer.impactReport', href: '/impact' },
+    { labelKey: 'footer.volunteer', href: '/contact' },
+  ];
+
+  const programLinks = [
+    { labelKey: 'footer.vanMahotsav', href: '/programs' },
+    { labelKey: 'footer.wildlifeGuardians', href: '/programs' },
+    { labelKey: 'footer.greenSchools', href: '/programs' },
+    { labelKey: 'footer.cleanRivers', href: '/programs' },
+    { labelKey: 'footer.urbanForests', href: '/programs' },
+  ];
+
+  const legalLinks = [
+    { labelKey: 'footer.privacyPolicy', href: 'mailto:info@greenbharat.org?subject=Privacy%20Policy' },
+    { labelKey: 'footer.termsOfUse', href: 'mailto:info@greenbharat.org?subject=Terms%20of%20Use' },
+    { labelKey: 'footer.financials', href: 'mailto:info@greenbharat.org?subject=Financial%20Report%20Request' },
+  ];
 
   return (
     <footer className="relative border-t border-ivory/5" id="footer">
@@ -41,29 +44,28 @@ export default function Footer() {
               </div>
               <div>
                 <span className="text-lg font-bold font-[var(--font-outfit)] text-ivory">
-                  Green <span className="text-gradient-saffron">Bharat</span>
+                  {t('nav.brandGreen')} <span className="text-gradient-saffron">{t('nav.brandBharat')}</span>
                 </span>
               </div>
             </div>
             <p className="text-sm text-ivory/40 leading-relaxed">
-              Nurturing Bharat&apos;s green heritage through science-driven
-              conservation, community empowerment, and ecological restoration.
+              {t('footer.tagline')}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
             <h4 className="text-sm font-semibold text-ivory uppercase tracking-wider mb-4">
-              Quick Links
+              {t('footer.quickLinks')}
             </h4>
             <ul className="flex flex-col gap-2.5">
               {quickLinks.map((link) => (
-                <li key={link.label}>
+                <li key={link.labelKey}>
                   <Link
                     href={link.href}
                     className="text-sm text-ivory/40 hover:text-gold transition-colors duration-200 cursor-pointer"
                   >
-                    {link.label}
+                    {t(link.labelKey)}
                   </Link>
                 </li>
               ))}
@@ -73,16 +75,16 @@ export default function Footer() {
           {/* Programs */}
           <div>
             <h4 className="text-sm font-semibold text-ivory uppercase tracking-wider mb-4">
-              Programs
+              {t('footer.programs')}
             </h4>
             <ul className="flex flex-col gap-2.5">
               {programLinks.map((link) => (
-                <li key={link.label}>
+                <li key={link.labelKey}>
                   <Link
                     href={link.href}
                     className="text-sm text-ivory/40 hover:text-gold transition-colors duration-200 cursor-pointer"
                   >
-                    {link.label}
+                    {t(link.labelKey)}
                   </Link>
                 </li>
               ))}
@@ -92,10 +94,10 @@ export default function Footer() {
           {/* Newsletter */}
           <div>
             <h4 className="text-sm font-semibold text-ivory uppercase tracking-wider mb-4">
-              Stay Updated
+              {t('footer.stayUpdated')}
             </h4>
             <p className="text-sm text-ivory/40 mb-4">
-              Get monthly updates on our conservation efforts and impact stories.
+              {t('footer.newsletterText')}
             </p>
             <form
               action="mailto:newsletter@greenbharat.org"
@@ -107,7 +109,7 @@ export default function Footer() {
                 type="email"
                 name="email"
                 required
-                placeholder="Your email"
+                placeholder={t('footer.emailPlaceholder')}
                 className="flex-1 py-2.5 px-4 rounded-xl bg-ivory/5 border border-ivory/10 text-ivory text-sm placeholder:text-ivory/25 focus:outline-none focus:border-gold/30 transition-all duration-300"
                 id="footer-email-input"
               />
@@ -131,15 +133,15 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-ivory/25">
-          <span>© {currentYear} Green Bharat Foundation. All rights reserved.</span>
+          <span>{t('footer.copyright', { year: currentYear })}</span>
           <div className="flex gap-6">
             {legalLinks.map((link) => (
               <a
-                key={link.label}
+                key={link.labelKey}
                 href={link.href}
                 className="hover:text-ivory/50 transition-colors cursor-pointer"
               >
-                {link.label}
+                {t(link.labelKey)}
               </a>
             ))}
           </div>

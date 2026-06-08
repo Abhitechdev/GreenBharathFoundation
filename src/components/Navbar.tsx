@@ -4,20 +4,23 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useAppStore } from '@/lib/store';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 const navLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Mission', href: '/mission' },
-  { label: 'Impact', href: '/impact' },
-  { label: 'Programs', href: '/programs' },
-  { label: 'Stories', href: '/stories' },
-  { label: 'Contact', href: '/contact' },
+  { labelKey: 'nav.home', href: '/' },
+  { labelKey: 'nav.mission', href: '/mission' },
+  { labelKey: 'nav.impact', href: '/impact' },
+  { labelKey: 'nav.programs', href: '/programs' },
+  { labelKey: 'nav.stories', href: '/stories' },
+  { labelKey: 'nav.contact', href: '/contact' },
 ];
 
 export default function Navbar() {
   const { isMobileMenuOpen, setMobileMenuOpen } = useAppStore();
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -51,15 +54,15 @@ export default function Navbar() {
           </div>
           <div>
             <span className="text-lg font-bold font-[var(--font-outfit)] tracking-tight text-ivory">
-              Green <span className="text-gradient-saffron">Bharat</span>
+              {t('nav.brandGreen')} <span className="text-gradient-saffron">{t('nav.brandBharat')}</span>
             </span>
             <span className="block text-[10px] uppercase tracking-[0.2em] text-gold opacity-70">
-              Foundation
+              {t('nav.brandFoundation')}
             </span>
           </div>
         </Link>
 
-        {/* Desktop Links (increased gap-1 to gap-3 for better button spacing) */}
+        {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-3">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
@@ -75,14 +78,17 @@ export default function Navbar() {
                 id={`nav-${link.href === '/' ? 'home' : link.href.slice(1)}`}
                 suppressHydrationWarning
               >
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             );
           })}
         </div>
 
-        {/* CTA + Mobile Toggle (increased gap-3 to gap-4) */}
+        {/* CTA + Language Switcher + Mobile Toggle */}
         <div className="flex items-center gap-4">
+          <div className="hidden sm:block">
+            <LanguageSwitcher />
+          </div>
           <Link
             href="/donate"
             onClick={() => setMobileMenuOpen(false)}
@@ -90,12 +96,12 @@ export default function Navbar() {
             id="nav-donate-btn"
             suppressHydrationWarning
           >
-            <span>Donate Now</span>
+            <span>{t('nav.donateNow')}</span>
           </Link>
           <button
             className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl text-ivory hover:bg-ivory/10 transition-colors cursor-pointer"
             onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label={t('nav.toggleMenu')}
             id="mobile-menu-toggle"
             suppressHydrationWarning
           >
@@ -138,17 +144,20 @@ export default function Navbar() {
                 }`}
                 suppressHydrationWarning
               >
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             );
           })}
+          <div className="flex justify-center mt-2 mb-2">
+            <LanguageSwitcher />
+          </div>
           <Link
             href="/donate"
             onClick={() => setMobileMenuOpen(false)}
             className="btn-primary mt-2 justify-center cursor-pointer"
             suppressHydrationWarning
           >
-            <span>Donate Now</span>
+            <span>{t('nav.donateNow')}</span>
           </Link>
         </div>
       </div>

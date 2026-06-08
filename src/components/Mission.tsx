@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-const pillars = [
+const pillarConfigs = [
   {
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -11,9 +12,9 @@ const pillars = [
         <path d="M12 2a7 7 0 0 0-7 7h14a7 7 0 0 0-7-7Z" />
       </svg>
     ),
-    title: 'Reforestation',
-    description: 'Breathing life back into degraded lands. We plant biodiverse micro-forests of native species that rebuild topsoil, capture carbon, and trigger the return of lost wildlife.',
-    stat: '5M+ Trees Planted',
+    titleKey: 'mission.pillar1Title',
+    descKey: 'mission.pillar1Desc',
+    statKey: 'mission.pillar1Stat',
     color: 'forest',
     coords: { x: 120, y: 100 },
   },
@@ -25,9 +26,9 @@ const pillars = [
         <path d="M2 12h20" />
       </svg>
     ),
-    title: 'Ecosystem Revival',
-    description: 'Revitalizing critical biomes from the Himalayas to the Western Ghats. We restore endangered wetlands and ancient grasslands to buffer communities against climate extremes.',
-    stat: '48 Ecosystems Healed',
+    titleKey: 'mission.pillar2Title',
+    descKey: 'mission.pillar2Desc',
+    statKey: 'mission.pillar2Stat',
     color: 'river',
     coords: { x: 680, y: 100 },
   },
@@ -40,9 +41,9 @@ const pillars = [
         <path d="M16 3.13a4 4 0 0 1 0 7.75" />
       </svg>
     ),
-    title: 'Community Empowerment',
-    description: 'Putting stewardship back into indigenous hands. We co-create green micro-economies and agroforestry models, turning nature conservation into an engine of local prosperity.',
-    stat: '2,500+ Villages Partnered',
+    titleKey: 'mission.pillar3Title',
+    descKey: 'mission.pillar3Desc',
+    statKey: 'mission.pillar3Stat',
     color: 'saffron',
     coords: { x: 120, y: 380 },
   },
@@ -53,9 +54,9 @@ const pillars = [
         <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
       </svg>
     ),
-    title: 'Education & Advocacy',
-    description: 'Igniting a nationwide green consciousness. Through interactive schooling, technology tools, and policy updates, we empower tomorrow’s leaders to defend our shared heritage.',
-    stat: '300K Students Trained',
+    titleKey: 'mission.pillar4Title',
+    descKey: 'mission.pillar4Desc',
+    statKey: 'mission.pillar4Stat',
     color: 'gold',
     coords: { x: 680, y: 380 },
   },
@@ -92,6 +93,7 @@ export default function Mission() {
   const sectionRef = useRef<HTMLElement>(null);
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [mobileActiveIdx, setMobileActiveIdx] = useState<number | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -117,10 +119,10 @@ export default function Mission() {
         {/* Section header */}
         <div className="text-center mb-12 reveal">
           <span className="inline-block text-sm font-semibold text-gold tracking-[0.2em] uppercase mb-4">
-            Our Mission
+            {t('mission.sectionLabel')}
           </span>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-ivory mb-6">
-            Four Pillars of <span className="text-gradient-saffron">Change</span>
+            {t('mission.heading')} <span className="text-gradient-saffron">{t('mission.headingHighlight')}</span>
           </h2>
         </div>
 
@@ -129,11 +131,11 @@ export default function Mission() {
           
           {/* Connector lines SVG */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible" viewBox="0 0 800 480" width="100%" height="100%">
-            {pillars.map((pillar, idx) => {
+            {pillarConfigs.map((pillar, idx) => {
               const isActive = activeIdx === idx;
               const colors = colorMap[pillar.color];
               return (
-                <g key={pillar.title}>
+                <g key={t(pillar.titleKey)}>
                   {/* Energy Flowing Line */}
                   <line
                     x1="400"
@@ -182,27 +184,27 @@ export default function Mission() {
                         </svg>
                       </div>
                       <h3 className="font-bold text-lg text-ivory mb-2 tracking-wide font-[var(--font-outfit)]">
-                        Explore Our Pillars
+                        {t('mission.explorePillars')}
                       </h3>
                       <p className="text-[11px] text-ivory/40 max-w-[220px] leading-relaxed">
-                        Hover over any surrounding node in the network to inspect our core areas of impact.
+                        {t('mission.explorePrompt')}
                       </p>
                     </div>
                   ) : (
                     <div className="flex flex-col items-center justify-center h-full">
                       <span className={`text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-md mb-2.5 border ${
-                        colorMap[pillars[activeIdx].color].text
+                        colorMap[pillarConfigs[activeIdx].color].text
                       } border-current bg-current/5`}>
-                        Pillar 0{activeIdx + 1}
+                        {t('mission.pillarLabel', { number: activeIdx + 1 })}
                       </span>
                       <h3 className="font-bold text-xl text-ivory mb-3 font-[var(--font-outfit)] animate-[fade-up_0.35s_ease-out]">
-                        {pillars[activeIdx].title}
+                        {t(pillarConfigs[activeIdx].titleKey)}
                       </h3>
                       <p className="text-xs text-ivory/60 leading-relaxed max-w-[260px] mb-4 min-h-[56px] animate-[fade-up_0.35s_ease-out_0.05s_both]">
-                        {pillars[activeIdx].description}
+                        {t(pillarConfigs[activeIdx].descKey)}
                       </p>
                       <div className="text-xs font-bold text-gold uppercase tracking-wider border border-gold/25 bg-gold/5 py-1 px-3 rounded-full animate-[fade-up_0.35s_ease-out_0.1s_both]">
-                        {pillars[activeIdx].stat}
+                        {t(pillarConfigs[activeIdx].statKey)}
                       </div>
                     </div>
                   )}
@@ -211,12 +213,12 @@ export default function Mission() {
             </foreignObject>
 
             {/* Symmetrical Corner Nodes */}
-            {pillars.map((pillar, idx) => {
+            {pillarConfigs.map((pillar, idx) => {
               const isActive = activeIdx === idx;
               const themeColors = colorMap[pillar.color];
               return (
                 <foreignObject
-                  key={pillar.title}
+                  key={t(pillar.titleKey)}
                   x={pillar.coords.x - 45}
                   y={pillar.coords.y - 45}
                   width={90}
@@ -240,12 +242,12 @@ export default function Mission() {
                           ? `bg-deep-2 border-gold text-gold scale-110 shadow-[0_0_30px_${themeColors.glow}]`
                           : 'bg-forest/20 border-forest-light/25 text-ivory/60 hover:text-ivory hover:border-gold/30 hover:scale-105 shadow-lg'
                       }`}
-                      aria-label={pillar.title}
+                      aria-label={t(pillar.titleKey)}
                       suppressHydrationWarning
                     >
                       {pillar.icon}
                       <span className="text-[9px] font-bold uppercase tracking-wider mt-1 text-center truncate max-w-[72px]">
-                        {pillar.title.split(' ')[0]}
+                        {t(pillar.titleKey).split(' ')[0]}
                       </span>
                     </button>
                   </div>
@@ -259,15 +261,15 @@ export default function Mission() {
         {/* ================= MOBILE ACCORDION NETWORK STACK ================= */}
         <div className="block md:hidden flex flex-col gap-4 w-full px-4 reveal" style={{ transitionDelay: '0.1s' }}>
           <p className="text-center text-xs text-ivory/40 mb-4">
-            Tap a pillar icon to expand and explore our ecological work.
+            {t('mission.mobilePrompt')}
           </p>
 
-          {pillars.map((pillar, idx) => {
+          {pillarConfigs.map((pillar, idx) => {
             const isExpanded = mobileActiveIdx === idx;
             const themeColors = colorMap[pillar.color];
             return (
               <div
-                key={pillar.title}
+                key={t(pillar.titleKey)}
                 className={`border rounded-2xl transition-all duration-500 overflow-hidden ${
                   isExpanded
                     ? 'bg-deep-2 border-gold/30 shadow-[0_0_20px_rgba(212,168,67,0.05)]'
@@ -298,7 +300,7 @@ export default function Mission() {
                     <span className={`font-bold tracking-tight text-left transition-colors ${
                       isExpanded ? 'text-gold' : 'text-ivory'
                     }`}>
-                      {pillar.title}
+                      {t(pillar.titleKey)}
                     </span>
                   </div>
                   {/* Arrow Icon */}
@@ -327,12 +329,12 @@ export default function Mission() {
                 >
                   <div className="p-5 pt-0 border-t border-ivory/5 bg-deep-2/40">
                     <p className="text-xs text-ivory/70 leading-relaxed mb-4">
-                      {pillar.description}
+                      {t(pillar.descKey)}
                     </p>
                     <span className={`inline-block text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full border ${
                       themeColors.text
                     } border-current bg-current/5`}>
-                      {pillar.stat}
+                      {t(pillar.statKey)}
                     </span>
                   </div>
                 </div>
