@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const repositoryName = "GreenBharath";
+const repositoryName = "GreenBharathFoundation";
 const isProduction = process.env.NODE_ENV === "production";
 const githubPagesBasePath = isProduction ? `/${repositoryName}` : undefined;
 
@@ -10,7 +10,8 @@ const nextConfig: NextConfig = {
   basePath: githubPagesBasePath,
   assetPrefix: githubPagesBasePath ? `${githubPagesBasePath}/` : undefined,
   images: {
-    unoptimized: true,
+    loader: "custom",
+    loaderFile: "./src/lib/imageLoader.ts",
   },
 };
 
