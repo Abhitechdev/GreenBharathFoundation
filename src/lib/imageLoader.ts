@@ -4,7 +4,8 @@ export default function imageLoader({ src }: { src: string; width?: number; qual
     return src;
   }
 
-  const repositoryName = 'GreenBharathFoundation';
+  // Get the repository name injected at build time
+  const repositoryName = process.env.NEXT_PUBLIC_REPOSITORY_NAME || 'GreenBharathFoundation';
   const isProduction = process.env.NODE_ENV === 'production';
 
   if (isProduction) {

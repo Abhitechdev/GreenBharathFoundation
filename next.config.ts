@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
-const repositoryName = "GreenBharathFoundation";
+const githubRepository = process.env.GITHUB_REPOSITORY; // e.g. "Abhitechdev/GreenBharathFoundation"
+const repositoryName = githubRepository ? githubRepository.split("/")[1] : "GreenBharathFoundation";
+
 const isProduction = process.env.NODE_ENV === "production";
 const githubPagesBasePath = isProduction ? `/${repositoryName}` : undefined;
 
@@ -12,6 +14,9 @@ const nextConfig: NextConfig = {
   images: {
     loader: "custom",
     loaderFile: "./src/lib/imageLoader.ts",
+  },
+  env: {
+    NEXT_PUBLIC_REPOSITORY_NAME: repositoryName,
   },
 };
 
