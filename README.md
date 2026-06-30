@@ -3,8 +3,7 @@
 Green Bharat Foundation is a responsive Next.js website for an environmental NGO concept focused on reforestation, conservation programs, community stories, donations, and volunteer contact.
 
 ## Live Site
-
-https://abhitechdev.github.io/GreenBharath/
+(https://abhitechdev.github.io/GreenBharathFoundation/)
 
 ## Tech Stack
 
